@@ -1,6 +1,7 @@
 import React from 'react'
 import bgImg from '../../../Assets/Images/HomeImages/bgHero.jpg'
 import CustomButton from '../../../CommonComps/CustomButton/CustomButton'
+import { Link } from 'react-router-dom'
 
 const Hero = () => {
   return (
@@ -14,7 +15,7 @@ const Hero = () => {
       <div className='w-full flex justify-center gap-6 items-start lg:flex-row flex-col  z-20'>
         <span className='flex-1 flex-col gap-y-4'>
             <h1 className='font-extrabold text-5xl leading-relaxed mb-4'>“Together, We Bring Compassion and Care to Every Community”</h1>
-            <CustomButton text={"Learn More"} />
+            <Link to={"/About"}><CustomButton text={"Learn More"} /></Link>
         </span>
 
         <span className='flex-1 flex flex-col  gap-y-8 px-4 py-2 bg-white/20 rounded-2xl '>
@@ -24,7 +25,7 @@ const Hero = () => {
             clothing donations. Join us in spreading warmth and 
             smiles by donating today. Together, we can create a 
             community where no one is left behind.</p>
-            <CustomButton text={"Donate Now"} />
+            <Link to={"/Donate"} ><CustomButton text={"Donate Now"} /></Link>
         </span>
 
       </div>

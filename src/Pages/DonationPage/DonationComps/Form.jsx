@@ -10,6 +10,7 @@ const Form = () => {
         category: '',
         condition: '',
     });
+    const [massageText , setMassageText] = useState(null)
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -22,17 +23,24 @@ const Form = () => {
     const handleSubmit = async () => {
         console.log('Form data:', formData);
         const token = localStorage.getItem('token');
-        try {
-            const response = await axios.post(`${BASE_URL}/api/users/createItem`, formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            console.log('Form submitted successfully:', response.data);
-            // Handle successful form submission
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            // Handle form submission error
+        
+        if(formData.description !== "" && formData.title !== ""){
+            try {
+                const response = await axios.post(`${BASE_URL}/api/users/createItem`, formData, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                console.log('Form submitted successfully:', response.data);
+                setMassageText(`Thank You ${localStorage.getItem('username')} For Your Donations`)
+                // Handle successful form submission
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                setMassageText("Try Again!")
+                // Handle form submission error
+            }
+        }else{
+            setMassageText("Fill The Form Correctly")
         }
     };
 
@@ -92,9 +100,10 @@ const Form = () => {
                         onChange={handleChange}
                     />
                 </div>
+                <p className='text-xl font-bold'>{massageText}</p>
 
-                <div className="w-full mt-8">
-                    <CustomButton text={"Submit"} onClick={handleSubmit} className={"w-full py-4"} />
+                <div className="w-fit mt-8">
+                    <CustomButton text={"Submit You Donation Details"} onClick={handleSubmit} className={"w-full py-4"} />
                 </div>
             </div>
         </div>

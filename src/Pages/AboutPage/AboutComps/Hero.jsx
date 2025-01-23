@@ -14,7 +14,7 @@ const Hero = () => {
       <div className='w-full  flex justify-center gap-6 items-center  flex-col  z-20'>
             <CustomButton text={"About NextCare"} className={"text-2xl"} />
 
-            <h1 className='font-bold text-5xl'>Caring For Communities</h1>
+            <h1 className='font-bold text-5xl text-center'>Caring For Communities</h1>
 
             <h1 className='font-bold text-3xl text-center'>"Our mission is to connect donors and NGOs to create a positive,
             lasting impact through acts of care and kindness."</h1>

@@ -30,7 +30,7 @@ const Footer = () => {
 
         <div className='2xl:flex-1 w-full flex flex-col gap-y-4 p-6'>
             <h1 className='text-xl font-bold'>Contact Us</h1>
-            <span className='flex flex-col w-full p-6 flex-wrap bg-white/20 rounded-2xl'>
+            <span className='flex flex-col w-full flex-wrap  rounded-2xl'>
                 <h1 className='font-bold'>123 Giving Lane, Your City, 
                 Country</h1>
                 <h1 className='font-bold'>+123 456 7890

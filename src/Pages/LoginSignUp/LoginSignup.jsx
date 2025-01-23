@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import BASE_URL from '../../GlobalProvider/BASE_URL';
 import LogoPng from '../../Assets/Images/LogoPng.png';
+import { ContextAPI } from '../../GlobalProvider/ContextAPI';
+import { useNavigate } from 'react-router-dom';
 
 const LoginSignUp = () => {
     const [switche , setSwitche] = useState(false);
@@ -9,42 +11,79 @@ const LoginSignUp = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const {screenWidth ,  setIsAuthenticated , currentUser , SetcurrentUser} = useContext(ContextAPI)
+
+    function sanitizeEmail(email) {
+        // Find the index of '@' and take substring before it
+        const atIndex = email.indexOf('@');
+        if (atIndex !== -1) {
+          return email.substring(0, atIndex);
+        }
+        return email; // Return as is if '@' is not found
+      }
+      
+
     const handleSwitche = (selection) => {
         setSwitche(selection === true ? false : true);
     };
 
+    const navigate = useNavigate();
+
     const handleLogin = async () => {
-        try {
-            const response = await axios.post(`${BASE_URL}/auth/signin`, {
-                email,
-                password,
-            });
-            const { jwt, role } = response.data;
-            localStorage.setItem('token', jwt);
-            localStorage.setItem('role', role);
-            console.log('Login successful:', response.data);
-            // Handle successful login
-        } catch (error) {
-            console.error('Login error:', error);
-            // Handle login error
+        if(email !== "" , password !== "" ){
+            try {
+                const response = await axios.post(`${BASE_URL}/auth/signin`, {
+                    email,
+                    password,
+                });
+                const { jwt, role } = response.data;
+
+                localStorage.setItem('token', jwt);
+                localStorage.setItem('role', role);
+                localStorage.setItem('username' , sanitizeEmail(email))
+                
+
+                
+                console.log('Login successful:', response.data);
+                setIsAuthenticated(true)
+                navigate("/")
+                SetcurrentUser(sanitizeEmail(email))
+                console.log(localStorage.getItem('username') , "my"  )
+                // Handle successful login
+            } catch (error) {
+                console.error('Login error:', error);
+                // Handle login error
+            }
+        }else{
+            alert("Please Fill Input Fields Correctly")
         }
     };
 
     const handleSignUp = async () => {
-        try {
-            const response = await axios.post(`${BASE_URL}/auth/signup`, {
-                email,
-                password,
-                confirmPassword,
-            });
-            const { jwt, role } = response.data;
-            localStorage.setItem('token', jwt);
-            localStorage.setItem('role', role);
-            console.log('Signup successful:', response.data);
-            // Handle successful signup
-        } catch (error) {
-            console.error('Signup error:', error);
-            // Handle signup error
+        if(email !== "" , password !== "" , confirmPassword !== ""){
+            try {
+                const response = await axios.post(`${BASE_URL}/auth/signup`, {
+                    email,
+                    password,
+                    confirmPassword,
+                });
+                const { jwt, role } = response.data;
+                localStorage.setItem('token', jwt);
+                localStorage.setItem('role', role);
+                localStorage.setItem('username' , sanitizeEmail(email))
+                
+                console.log('Signup successful:', response.data);
+                setIsAuthenticated(true)
+                navigate("/")
+                SetcurrentUser(sanitizeEmail(email))
+                console.log(localStorage.getItem('username') , "my"  )
+                // Handle successful signup
+            } catch (error) {
+                console.error('Signup error:', error);
+                // Handle signup error
+            }
+        }else {
+            alert("Please Enter Correct Fields")
         }
     };
 
@@ -53,7 +92,7 @@ const LoginSignUp = () => {
     }, []);
 
     return (
-        <div className='flex flex-col items-center justify-center w-full min-h-screen py-8 text-center text-fontColor bg-darkBG'>
+        <div className='flex flex-col items-center justify-center w-full min-h-screen py-8 text-center text-fontColor bg-darkBG px-8 '>
             <span className='h-32 w-60' style={{backgroundImage: `url(${LogoPng})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}></span>
 
             <div className='relative flex items-center justify-center mb-10 text-white transition-all border-2 rounded-full cursor-pointer w-60 border-orangeBG bg-orangeBG'>
@@ -62,9 +101,11 @@ const LoginSignUp = () => {
                 <span onClick={() => handleSwitche(false)} className='z-20 flex-1 px-5 py-3 font-semibold rounded-full'>SignUp</span>
             </div>
 
-            <div className='md:w-[500px] relative w-full overflow-hidden'>
-                <div className={`w-fit transition-all duration-700 ${switche ? '-translate-x-1/2' : 'translate-x-0'} flex`}>
-                    <div className='flex flex-col gap-4 md:w-[500px] bg-white/10 p-4 rounded-md'>
+            <div className='md:w-[500px]  relative w-full overflow-hidden'>
+                <div >
+                    {screenWidth > 700 ? (
+                        <div className={`w-fit  transition-all duration-700 ${switche ? '-translate-x-1/2' : 'translate-x-0'} flex`}>
+                         <div className='flex flex-col gap-4 md:w-[500px] screen bg-white/10 p-4 rounded-md'>
                         <span className='flex flex-col mb-4 text-left gap-y-2'>
                             <h1 className="text-lg font-semibold text-white">Email</h1>
                             <input
@@ -98,7 +139,7 @@ const LoginSignUp = () => {
                         </div>
                     </div>
 
-                    <div className='flex flex-col gap-4 md:w-[500px] bg-white/10 p-4 rounded-xl'>
+                    <div className='flex flex-col gap-4 md:w-[500px] screen bg-white/10 p-4 rounded-xl'>
                         <span className='flex flex-col text-left gap-y-2'>
                             <h1 className="text-lg font-semibold text-white">Email</h1>
                             <input
@@ -136,6 +177,85 @@ const LoginSignUp = () => {
                             <h1 onClick={handleSignUp} className='w-full py-2 font-semibold text-center text-white rounded-md cursor-pointer bg-orangeBG md:px-40 md:w-auto'>Sign Up</h1>
                         </div>
                     </div>
+                        </div>
+                    ) : (
+                        <>
+                        {switche ? (
+                            <div className='flex flex-col gap-4 md:w-[500px] screen bg-white/10 p-4 rounded-xl'>
+                            <span className='flex flex-col text-left gap-y-2'>
+                                <h1 className="text-lg font-semibold text-white">Email</h1>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Your Title"
+                                    className="w-full p-2 border-none rounded-md outline-none bg-iconBG"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </span>
+    
+                            <span className='flex flex-col text-left gap-y-2'>
+                                <h1 className="text-lg font-semibold text-white">Password</h1>
+                                <input
+                                    type="password"
+                                    placeholder="Enter Your Title"
+                                    className="w-full p-2 border-none rounded-md outline-none bg-iconBG"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </span>
+    
+                            <span className='flex flex-col text-left gap-y-2'>
+                                <h1 className="text-lg font-semibold text-white">Confirm Password</h1>
+                                <input
+                                    type="password"
+                                    placeholder="Enter Your Title"
+                                    className="w-full p-2 border-none rounded-md outline-none bg-iconBG"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </span>
+    
+                            <div className='flex items-center justify-center w-full mt-8 curs'>
+                                <h1 onClick={handleSignUp} className='w-full py-2 font-semibold text-center text-white rounded-md cursor-pointer bg-orangeBG md:px-40 md:w-auto'>Sign Up</h1>
+                            </div>
+                        </div>
+                        ) : (
+                            <div className='flex flex-col gap-4 md:w-[500px] screen bg-white/10 p-4 rounded-md'>
+                            <span className='flex flex-col mb-4 text-left gap-y-2'>
+                                <h1 className="text-lg font-semibold text-white">Email</h1>
+                                <input
+                                    type="text"
+                                    placeholder="Enter Your Title"
+                                    className="w-full p-2 border-none rounded-md outline-none bg-iconBG"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </span>
+    
+                            <span className='flex flex-col text-left gap-y-2'>
+                                <h1 className="text-lg font-semibold text-white">Password</h1>
+                                <input
+                                    type="password"
+                                    placeholder="Enter Your Title"
+                                    className="w-full p-2 border-none rounded-md outline-none bg-iconBG"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </span>
+    
+                            <span className='w-full'>
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                    <span className="text-base font-medium text-white underline">Forget Password?</span>
+                                </label>
+                            </span>
+    
+                            <div className='flex items-center justify-center w-full mt-8 curs'>
+                                <h1 onClick={handleLogin} className='w-full py-2 font-semibold text-center text-white rounded-md cursor-pointer bg-orangeBG md:px-40 md:w-auto'>Login</h1>
+                            </div>
+                        </div>
+                        ) }
+                        </>
+                    )}
                 </div>
             </div>
         </div>

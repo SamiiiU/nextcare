@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import bgImg from '../../../Assets/Images/HomeImages/bgHero.jpg'
 import CustomButton from '../../../CommonComps/CustomButton/CustomButton'
+import { ContextAPI } from '../../../GlobalProvider/ContextAPI'
 
 const Hero = () => {
+  const {currentUser} = useContext(ContextAPI)
   return (
     <div className='w-full text-white 2xl:min-h-[80vh] min-h-screen   px-4 sm:px-16 md:px-28 2xl:px-80 
     sm:pt-40 pt-28 pb-28 flex flex-col justify-center relative z-0' style={{backgroundImage : `url(${bgImg})` , backgroundSize : 'cover' , backgroundPosition : 'center' }}>
@@ -12,9 +14,9 @@ const Hero = () => {
       to-transparent' />
 
       <div className='w-full  flex justify-center gap-6 items-center  flex-col  z-20'>
-            <CustomButton text={"Hi Ali!"} className={"text-2xl"} />
+            <CustomButton text={`Hi ${currentUser}`} className={"text-2xl"} />
 
-            <h1 className='font-bold text-5xl'>Welcome to our donation section</h1>
+            <h1 className='font-bold text-5xl text-center'>Welcome to our donation section</h1>
 
             <h1 className='font-bold text-3xl text-center'>"Our mission is to connect donors and NGOs to create a positive,
             lasting impact through acts of care and kindness."</h1>
