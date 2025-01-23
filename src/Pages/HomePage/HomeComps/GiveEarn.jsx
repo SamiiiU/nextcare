@@ -10,7 +10,7 @@ const GiveEarn = () => {
   return (
     <div className='  w-full -translate-y-16 py-20  px-4 sm:px-16 md:px-28 2xl:px-80 
      flex flex-col justify-center relative z-0' >
-        <h1 className='text-4xl font-bold text-darkBG mb-6'>Earn as You Give</h1>
+             <h1 className='text-4xl font-bold text-darkBG mb-6'>Earn as You Give</h1>
             <p>NextWear values your generosity and believes in rewarding you for making a difference. 
             Every time you donate, you earn reward points that can be redeemed for exciting discounts, 
             exclusive coupons, or thoughtful gifts. To encourage even more impactful giving, we’ve 

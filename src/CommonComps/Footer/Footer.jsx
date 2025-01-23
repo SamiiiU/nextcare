@@ -22,7 +22,7 @@ const Footer = () => {
             <h1 className='text-xl font-bold'>Quick Links</h1>
             <span className='flex w-full gap-x-10 flex-wrap'>
                 <Link to={'/'}  className='hover:font-bold transition-all'>Home</Link >
-                <Link to={'/About'}  className='hover:font-bold transition-all'>DOnate</Link >
+                <Link to={'/About'}  className='hover:font-bold transition-all'>About Us</Link >
                 <Link to={'/Donate'}  className='hover:font-bold transition-all'>Donate</Link >
 
             </span>

@@ -29,7 +29,7 @@ const HowTo = () => {
                 <p className='text-center'>{isHow.para}</p>
             </div>
         ))}
-    </div>
+        </div>
     </div>
   )
 }
