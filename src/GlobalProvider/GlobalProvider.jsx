@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { ContextAPI } from './ContextAPI'
+
 const GlobalProvider = ({children}) => {
 
     const [isAuthenticated , setIsAuthenticated] = useState(false)
