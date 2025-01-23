@@ -19,8 +19,8 @@ const LoginSignUp = () => {
                 email,
                 password,
             });
-            const { token, role } = response.data;
-            localStorage.setItem('token', token);
+            const { jwt, role } = response.data;
+            localStorage.setItem('token', jwt);
             localStorage.setItem('role', role);
             console.log('Login successful:', response.data);
             // Handle successful login
@@ -37,8 +37,8 @@ const LoginSignUp = () => {
                 password,
                 confirmPassword,
             });
-            const { token, role } = response.data;
-            localStorage.setItem('token', token);
+            const { jwt, role } = response.data;
+            localStorage.setItem('token', jwt);
             localStorage.setItem('role', role);
             console.log('Signup successful:', response.data);
             // Handle successful signup
