@@ -8,11 +8,18 @@ const Admin = () => {
     const handleSelected = (index) => {
         setSelected(index)
     }
+    const role = localStorage.getItem('role')
+
+    console.log(role)
+
+  
 
     const controllers = ["Dashboard" , "Ngos" , "Donators" , "TotalDonations"]
   return (
     <div className='flex w-full '>
-        <div className='min-w-80 relative max-w-[30%] px-10 py-6 min-h-screen bg-darkBG space-y-4'>
+        {role != 'ROLE_USER' ? (
+            <>
+                   <div className='min-w-80 relative max-w-[30%] px-10 py-6 min-h-screen bg-darkBG space-y-4'>
             <h1 className='mb-16 text-4xl font-bold text-white'>NextCare</h1>
 
             <div className='flex flex-col w-full gap-y-4'>
@@ -34,6 +41,12 @@ const Admin = () => {
             <h1 className='mb-4 text-4xl font-bold'>{controllers[selected]}</h1>
 
         </div>
+            </>
+        ) : (
+            <div className='sm:px-20 p-4 py-4 bg-white text-black text-xl'>
+              Sorry You cannot acccess Admin Panel , Login as an admin to access it
+            </div>
+        )}
     </div>
   )
 }
