@@ -3,8 +3,9 @@ import { ContextAPI } from './ContextAPI'
 
 const GlobalProvider = ({children}) => {
 
-    const [isAuthenticated , setIsAuthenticated] = useState(false)
+    const [isAuthenticated , setIsAuthenticated] = useState(true)
     const [currentUser , SetcurrentUser] = useState("User")
+    const [isLoading , setIsLoading] = useState(false)
 
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -34,7 +35,8 @@ const GlobalProvider = ({children}) => {
         states,
         isAuthenticated , setIsAuthenticated,
         screenWidth,
-        currentUser , SetcurrentUser
+        currentUser , SetcurrentUser,
+        isLoading , setIsLoading
 
  
     }}>
