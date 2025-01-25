@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../../CommonComps/NavBar/Navbar'
 import Hero from './DonationComps/Hero'
 import Footer from '../../CommonComps/Footer/Footer'
 import Form from './DonationComps/Form'
 import Loading from '../../CommonComps/Loading'
+import { ContextAPI } from '../../GlobalProvider/ContextAPI'
 
 const Donate = () => {
-    const [isLoading, setIsLoading] = useState(true);
+  const {  isLoading , setIsLoading } = useContext(ContextAPI)
+
 
     useEffect(() => {
+      setIsLoading(true)
+
       window.scrollTo(0, 0);
   
       const timer = setTimeout(() => {

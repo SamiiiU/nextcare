@@ -12,6 +12,7 @@ function App() {
   return (
     <Router>
       <GlobalProvider>
+        <div className="overflow-x-hidden">
         <Routes>
           <Route path="/LoginSignup" element={<LoginSignUp/>}/>
 
@@ -25,6 +26,7 @@ function App() {
 
 
         </Routes>
+        </div>
       </GlobalProvider>
     </Router>
   );

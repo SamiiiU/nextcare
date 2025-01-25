@@ -12,7 +12,7 @@ const Navbar = () => {
     const [isNavbarVisible, setIsNavbarVisible] = useState(true);
     const [menuOpen, setMenuOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false); // State for authentication
-    const { screenWidth, setIsLoading } = useContext(ContextAPI);
+    const {currentUser,SetcurrentUser, screenWidth, setIsLoading } = useContext(ContextAPI);
 
     const handleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -22,6 +22,7 @@ const Navbar = () => {
     useEffect(() => {
         const loginStatus = localStorage.getItem('isLogin') === "true"; // Convert to boolean
         setIsAuthenticated(loginStatus);
+        SetcurrentUser(localStorage.getItem("username"))
         console.log("isLogin is:", loginStatus);
     }, []); // Empty dependency array ensures this runs once on mount
 
@@ -64,11 +65,11 @@ const Navbar = () => {
                         <Link to={"/Donate"} className='rounded-lg bg-orangeBG px-4 py-2 font-bold text-lg'>Donate</Link>
 
                         {isAuthenticated ? (
-                            <span className='p-3 w-10 group flex flex-col justify-center items-center relative cursor-pointer h-10 rounded-full z-0 bg-orangeBG text-white'>
-                                <FaUser />
+                            <span className='px-4 py-2  group flex flex-col justify-center items-center relative cursor-pointer rounded-lg transition-all  z-0 bg-orangeBG text-white'>
+                                <span className='flex gap-x-2 font-bold text-lg items-center'>{currentUser}<FaUser /></span>
                                 <h1
                                     onClick={logout}
-                                    className='z-0 rounded-lg group-hover:block translate-y-10 hidden bg-white text-black px-4 py-2'
+                                    className='z-0 rounded-lg absolute group-hover:block translate-y-10 hidden bg-white text-black px-4 py-2'
                                 >
                                     Logout
                                 </h1>
@@ -102,7 +103,20 @@ const Navbar = () => {
                             <Link to={"/LoginSignUp"} className='sm:text-5xl text-3xl text-white py-6 border-b-2 border-white'>Login</Link>
                         </div>
 
-                        <Link to={"/Admin"}><CustomButton className={'absolute bottom-10 left-1/2 -translate-x-1/2'} text={"Go To Admin"} /></Link>
+                        {isAuthenticated ? (
+                            <span className='px-4 py-2 absolute bottom-10 left-1/2 -translate-x-1/2  group flex flex-col justify-center items-center  cursor-pointer rounded-lg transition-all  z-0 bg-orangeBG text-white'>
+                                <span className='flex gap-x-2 font-bold text-lg items-center'>{currentUser}<FaUser /></span>
+                                <h1
+                                    onClick={logout}
+                                    className='z-0 rounded-lg absolute group-hover:block translate-y-10 hidden bg-white text-black px-4 py-2'
+                                >
+                                    Logout
+                                </h1>
+                            </span>
+                        ) : (
+                            <Link to={"/LoginSignUp"}><CustomButton className={'absolute bottom-10 left-1/2 -translate-x-1/2'} text={"Login"} /></Link>
+                        )}
+                        
                     </div>
                 </>
             )}

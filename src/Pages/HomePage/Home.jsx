@@ -9,10 +9,12 @@ import Loading from '../../CommonComps/Loading'
 import { ContextAPI } from '../../GlobalProvider/ContextAPI'
 
 const Home = () => {
-  const { isAuthenticated, setIsAuthenticated, screenWidth , isLoading , setIsLoading } = useContext(ContextAPI)
+  const {  isLoading , setIsLoading } = useContext(ContextAPI)
 
 
   useEffect(() => {
+    setIsLoading(true)
+
     window.scrollTo(0, 0);
 
     const timer = setTimeout(() => {

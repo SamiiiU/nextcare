@@ -3,8 +3,8 @@ import { ContextAPI } from './ContextAPI'
 
 const GlobalProvider = ({children}) => {
 
-    const [isAuthenticated , setIsAuthenticated] = useState(true)
-    const [currentUser , SetcurrentUser] = useState("User")
+    const [isAuthenticated , setIsAuthenticated] = useState(localStorage.getItem("isLogin"))
+    const [currentUser , SetcurrentUser] = useState(localStorage.getItem("username"))
     const [isLoading , setIsLoading] = useState(false)
 
 
@@ -29,6 +29,15 @@ const GlobalProvider = ({children}) => {
           };
         }, []);
     }
+
+    function sanitizeEmail(email) {
+      // Find the index of '@' and take substring before it
+      const atIndex = email.indexOf('@');
+      if (atIndex !== -1) {
+        return email.substring(0, atIndex);
+      }
+      return email; // Return as is if '@' is not found
+    }
   
   return (
     <ContextAPI.Provider value={{
@@ -36,7 +45,8 @@ const GlobalProvider = ({children}) => {
         isAuthenticated , setIsAuthenticated,
         screenWidth,
         currentUser , SetcurrentUser,
-        isLoading , setIsLoading
+        isLoading , setIsLoading,
+        sanitizeEmail,
 
  
     }}>

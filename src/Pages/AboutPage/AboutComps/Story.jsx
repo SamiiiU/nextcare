@@ -17,7 +17,7 @@ const Story = () => {
         of generosity. From a handful of donors and one NGO partner, NextCare has grown into a 
         recognized platform that has touched thousands of lives worldwide</p>
 
-        <div className='w-full py-16 md:px-40 my-20  h-80' style={{backgroundImage : `url(${storyImg})` , backgroundPosition : 'center' , backgroundRepeat : 'no-repeat' , backgroundSize : 'cover'}}>
+        <div className='w-full py-16 md:px-40 my-20  h-80' style={{backgroundImage : `url(${storyImg})` , backgroundPosition : 'center' , backgroundRepeat : 'no-repeat' , backgroundSize : 'contain'}}>
             <span className='w-96 h-20' />
         </div>
 

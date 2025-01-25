@@ -10,7 +10,7 @@ const Form = () => {
         category: '',
         condition: '',
     });
-    const [massageText , setMassageText] = useState(null)
+    const [massageText, setMassageText] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,11 +20,12 @@ const Form = () => {
         });
     };
 
-    const handleSubmit = async () => {
-        console.log('Form data:', formData);
-        const token = localStorage.getItem('token');
-        
-        if(formData.description !== "" && formData.title !== ""){
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // Prevent default form submission
+        setMassageText("Sumbitting Request.....")
+
+        if (formData.description !== "" && formData.title !== "") {
+            const token = localStorage.getItem('token');
             try {
                 const response = await axios.post(`${BASE_URL}/api/users/createItem`, formData, {
                     headers: {
@@ -32,15 +33,13 @@ const Form = () => {
                     },
                 });
                 console.log('Form submitted successfully:', response.data);
-                setMassageText(`Thank You ${localStorage.getItem('username')} For Your Donations`)
-                // Handle successful form submission
+                setMassageText(`Thank You ${localStorage.getItem('username')} For Your Donations`);
             } catch (error) {
                 console.error('Error submitting form:', error);
-                setMassageText("Try Again!")
-                // Handle form submission error
+                setMassageText("Try Again!");
             }
-        }else{
-            setMassageText("Fill The Form Correctly")
+        } else {
+            setMassageText("Fill The Form Correctly");
         }
     };
 
@@ -53,7 +52,11 @@ const Form = () => {
                 involved. Founded in [Year], we started as a small community-driven initiative aimed
                 at collecting clothing and essentials for those affected by</p>
 
-            <div className='w-full rounded-2xl bg-white/20 px-10 py-4 flex flex-col mt-8 gap-y-4'>
+            {/* Form starts here */}
+            <form
+                onSubmit={handleSubmit}
+                className='w-full rounded-2xl bg-white/20 px-10 py-4 flex flex-col mt-8 gap-y-4'
+            >
                 <div className='w-full'>
                     <h1 className='font-bold text-2xl'>Title</h1>
                     <input
@@ -103,9 +106,11 @@ const Form = () => {
                 <p className='text-xl font-bold'>{massageText}</p>
 
                 <div className="w-fit mt-8">
-                    <CustomButton text={"Submit You Donation Details"} onClick={handleSubmit} className={"w-full py-4"} />
+                    <button type="submit" className="w-full py-4 outline-none">
+                        <CustomButton text={"Submit Your Donation Details"} className={"w-full py-4"} />
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };

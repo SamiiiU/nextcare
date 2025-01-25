@@ -1,11 +1,12 @@
 import React from 'react'
+import ScrollCounter from '../../../CommonComps/PrebuiltComs/ScrollCounter'
 
 const Role = () => {
 
     const role = [
-        {num : "10,000" , text : "Items Donated"},
-        {num : "500" , text : "NGo's Partnered"},
-        {num : "50,000" , text : "People Got Clean Clothes"},
+        {num : 10000 , text : "Items Donated"},
+        {num : 500 , text : "NGo's Partnered"},
+        {num : 50000 , text : "People Got Clean Clothes"},
     ]
   return (
     <div className=' w-full py-20 px-4 sm:px-16 md:px-28 2xl:px-80 
@@ -22,7 +23,7 @@ const Role = () => {
         <div className='w-full flex justify-center gap-8 flex-wrap '>
         {role.map((isHow , index) => (
             <div key={index} className='max-w-[300px]  shadow-lg rounded-2xl bg-white p-4 flex flex-col justify-center items-center gap-4'>
-                <span className='text-orangeBG text-4xl'>{isHow.num}</span>
+                <span className='text-orangeBG text-4xl'><ScrollCounter from={0} to={isHow.num}/></span>
                 <h1 className='text-black font-bold'>{isHow.text}</h1>
             </div>
         ))}
